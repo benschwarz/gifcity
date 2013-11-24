@@ -244,19 +244,21 @@
       Tumblr.current = pairs.rand();
 
       if ( Tumblr.current ) {
-        var preload = new Image();
-
-        preload.onload = preload.onerror = function (e) {
+        var preload = new XMLHttpRequest();
+        preload.open("get", Tumblr.current.gif, true);
+        preload.responseType = 'blob';
+        preload.onload = function () {
           Tumblr.changeImageTimeoutId = setTimeout( Tumblr.changeImage, Tumblr.changeImageDelay );
 
-          Tumblr.videoElem.src=Tumblr.current.gif;
+          // Free up the memory we used
+          window.URL.revokeObjectURL(Tumblr.videoElem.src);
+          Tumblr.videoElem.src = window.URL.createObjectURL(this.response);
           Tumblr.videoElem.playbackRate = Tumblr.current.rate;
-
-          // Need a way to detect an actual error, not just loading a video as an image.
-//          Tumblr.changeImageTimeoutId = setTimeout( Tumblr.changeImage, 0 );
         };
-
-        preload.src = Tumblr.current.gif;
+        preload.onerror = function () {
+          Tumblr.changeImageTimeoutId = setTimeout( Tumblr.changeImage, 0 );
+        }
+        preload.send();
       }
     },
 
