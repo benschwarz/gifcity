@@ -39,7 +39,7 @@ app.get('/', function (req, res) {
     },
     Output: {
       ThumbnailPattern: "",
-      Key: filename.replace(/\.gif$/i, '') + ".mp4",
+      Key: filename.replace(/\.gif$/i, '') + ".ts",
       PresetId: process.env.PRESET_ID, // specifies the output video format
       Rotate: 'auto'
     }
