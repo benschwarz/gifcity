@@ -13,7 +13,7 @@
     requestCallbacks: {},
 
     url: function ( blog ) {
-      return 'http://api.tumblr.com/v2' +
+      return 'https://api.tumblr.com/v2' +
              '/blog/' + blog.name + '.tumblr.com/posts?' +
              'api_key=' + Tumblr.apiKey +
              '&offset=' + blog.offset +
